@@ -86,7 +86,9 @@ export default {
       return this.step % 3;
     },
     isFinished() {
-      return this.step === 3 * Object.keys(this.durations[this.examType]).length;
+      return (
+        this.step === 3 * Object.keys(this.durations[this.examType]).length
+      );
     }
   },
   async created() {
@@ -132,23 +134,30 @@ export default {
       this.timer = null;
       this.step += 1;
       if (this.currSubTaskNum === 0) {
-        this.recorder.stop().then(({ audioUrl }) => {
-          const id = this.currTaskNum;
-          const audios = [ ...this.audioUrls ];
-          audios.push({
-            id,
-            filename:
-              this.examType + ". Задание " + id + ". " + this.userName + ".wav",
-            url: audioUrl
+        if (this.recorder) {
+          this.recorder.stop().then(({ audioUrl }) => {
+            const id = this.currTaskNum;
+            const audios = [...this.audioUrls];
+            audios.push({
+              id,
+              filename:
+                this.examType +
+                ". Задание " +
+                id +
+                ". " +
+                this.userName +
+                ".wav",
+              url: audioUrl
+            });
+            this.$store.commit("updateAudioUrls", audios);
+            this.recorder = null;
           });
-          this.$store.commit("updateAudioUrls", audios);
-          this.recorder = null;
-        });
+        }
         if (!this.isFinished) {
           this.start(this.durations.default);
         }
       } else {
-        if (this.currSubTaskNum === 2) {
+        if (this.currSubTaskNum === 2 && this.stream) {
           this.recorder = await recordAudio(this.stream);
           this.recorder.start();
         }
