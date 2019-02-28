@@ -12,8 +12,8 @@
         "questionsInterval": 0,
         "selectableImages": false,
         "note": "",
-        "prepareTime": 5,
-        "recordTime": 5
+        "prepareTime": 90,
+        "recordTime": 90
       },
       {
         "id": 2,
