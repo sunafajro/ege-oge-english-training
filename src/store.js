@@ -2,35 +2,20 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Noty from "noty";
+import tests from "./data/tests.json";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     audioUrls: [],
-    durations: {
-      // seconds
-      default: 5,
-      // minutes
-      ege: {
-        1: [0.1, 0.1], // [1.5, 1.5],
-        2: [0.1, 0.1], // [1.5, 1.7],
-        3: [0.1, 0.1], // [1.5, 2.0],
-        4: [0.1, 0.1] // [1.5, 2.0]
-      },
-      // minutes
-      oge: {
-        1: [0.1, 0.1], // [1.5, 2.0],
-        2: [0.1, 0.1], // [0.9, 5.7],
-        3: [0.1, 0.1], // [1.5, 2]
-      }
-    },
     examType: null,
     loggedIn: false,
     micAccess: null,
     step: 0,
     stream: null,
-    userName: ""
+    tests,
+    userCode: ""
   },
   getters: {
     getStep: state => {
@@ -65,8 +50,8 @@ export default new Vuex.Store({
       if (data.hasOwnProperty("examType")) {
         state.examType = data.examType;
       }
-      if (data.hasOwnProperty("userName")) {
-        state.userName = data.userName;
+      if (data.hasOwnProperty("userCode")) {
+        state.userCode = data.userCode;
       }
     }
   },
@@ -90,7 +75,7 @@ export default new Vuex.Store({
       }
     },
     login({ commit, dispatch, state }) {
-      if (state.userName && state.examType) {
+      if (state.userCode && state.examType) {
         commit("updateUserState", { loggedIn: true });
       } else {
         dispatch("showNotification", {
@@ -103,7 +88,7 @@ export default new Vuex.Store({
       commit("updateUserState", {
         examType: null,
         loggedIn: false,
-        userName: ""
+        userCode: ""
       });
     },
     showNotification(args, payload) {

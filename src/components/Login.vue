@@ -2,7 +2,12 @@
   <div>
     <form @submit.prevent="login">
       <div class="form-group">
-        <input class="form-control" placeholder="Ваше имя..." type="text" v-model="userName">
+        <input
+          class="form-control"
+          placeholder="Ваш шифр..."
+          type="text"
+          v-model="userCode"
+        />
       </div>
       <div class="form-group">
         <select class="form-control" v-model="examType">
@@ -12,7 +17,7 @@
         </select>
       </div>
       <div class="form-group text-center">
-        <input type="submit" class="btn btn-primary">
+        <input type="submit" class="btn btn-primary" />
       </div>
     </form>
   </div>
@@ -31,12 +36,12 @@ export default {
         this.$store.commit("updateUserState", { examType: value });
       }
     },
-    userName: {
+    userCode: {
       get() {
-        return this.$store.state.userName;
+        return this.$store.state.userCode;
       },
       set(value) {
-        this.$store.commit("updateUserState", { userName: value });
+        this.$store.commit("updateUserState", { userCode: value });
       }
     }
   },

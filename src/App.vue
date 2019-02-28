@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    <div class="alert alert-danger" v-if="!micAccess">Нет доступа к микрофону на вашем устройстве!</div>
+    <div class="alert alert-danger" v-if="!micAccess">
+      Нет доступа к микрофону на вашем устройстве!
+    </div>
     <div id="app" class="container">
       <div class="row header-title">
         <div class="col-12 text-center">
           <h3>Пробные тесты ОГЭ/ЕГЭ по английскому</h3>
         </div>
       </div>
-      <router-view/>
+      <router-view />
     </div>
     <div class="bottom-panel" v-if="loggedIn">
       <div class="alert alert-info">
@@ -20,11 +22,13 @@
               :download="a.filename"
               :key="'recording-' + a.id"
               v-for="a in audioUrls"
-            >Запись {{ a.id }}</a>
+            >
+              Запись {{ a.id }}
+            </a>
           </div>
           <div class="col-6 text-right">
             {{ " " }}
-            <b>{{ userName }}</b>
+            <b>{{ userCode }}</b>
             {{ " " }}
             <span class="logout-link" @click="logout">(Выйти)</span>
           </div>
@@ -39,7 +43,7 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["audioUrls", "loggedIn", "micAccess", "userName"])
+    ...mapState(["audioUrls", "loggedIn", "micAccess", "userCode"])
   },
   created() {
     if (!this.micAccess) {

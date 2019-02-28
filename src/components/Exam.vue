@@ -1,57 +1,38 @@
 <template>
   <div class="row">
     <div class="col-12" v-if="running">
-      <div :class="'alert ' + alertClass + ' text-center'">{{ time | timeFormat }}</div>
+      <div :class="'alert ' + alertClass + ' text-center'">
+        {{ time | timeFormat }}
+      </div>
     </div>
-    <div class="col-12" v-if="currSubTaskNum !== 0 && currTaskNum === 1">
-      <p>
-        <b>Задание 1.</b>
-        Суть задания.
-      </p>
-      <hr>
-      <p>Текст.</p>
-    </div>
-    <div class="col-12" v-if="currSubTaskNum !== 0 && currTaskNum === 2">
-      <p>
-        <b>Задание 2.</b>
-        Суть задания.
-      </p>
-      <hr>
-      <p>Текст.</p>
-    </div>
-    <div class="col-12" v-if="currSubTaskNum !== 0 && currTaskNum === 3">
-      <p>
-        <b>Задание 3.</b>
-        Суть задания
-      </p>
-      <hr>
-      <p>Текст.</p>
-    </div>
-    <div class="col-12" v-if="examType === 'ege' && currSubTaskNum !== 0 && currTaskNum === 4">
-      <p>
-        <b>Задание 4.</b>
-        Суть задания
-      </p>
-      <hr>
-      <p>Текст.</p>
+    <div class="col-12" v-if="currSubTaskNum !== 0">
+      <e-content-component :exam="$route.params.id" :task="currentTask" />
     </div>
     <div class="col-12" v-if="isFinished">
       <p>
         <b>Экзамен завершен!</b>
       </p>
-      <p>Не забудьте скачать записи ваших ответов по ссылкам в нижней панели.</p>
-      <button class="btn btn-success" @click="goToExamsList">Вернуться к списку экзаменов</button>
+      <p>
+        Незабудьте скачать записи ваших ответов по ссылкам в нижней панели.
+      </p>
+      <button class="btn btn-success" @click="goToExamsList">
+        Вернуться к списку экзаменов
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import ExamContent from "./ExamContent.vue";
 import { recordAudio } from "../recording";
 
 export default {
+  components: {
+    "e-content-component": ExamContent
+  },
   computed: {
-    ...mapState(["audioUrls", "durations", "examType", "stream", "userName"]),
+    ...mapState(["audioUrls", "tests", "examType", "stream", "userCode"]),
     alertClass() {
       return this.currSubTaskNum === 0
         ? "alert-info"
@@ -60,23 +41,32 @@ export default {
         : "alert-success";
     },
     iterations() {
-      const count = Object.keys(this.durations[this.examType]).length;
+      const count = this.selectedTest.tasks.length;
       return count * 2 + count - 1;
     },
     // продолжительность текущего интервала для задания
     currentInterval() {
-      const subTaskNum = this.currSubTaskNum - 1;
-      if (
-        this.durations.hasOwnProperty(this.examType) &&
-        this.durations[this.examType].hasOwnProperty(this.currTaskNum) &&
-        this.durations[this.examType][this.currTaskNum].hasOwnProperty(
-          subTaskNum
-        )
-      ) {
-        return this.durations[this.examType][this.currTaskNum][subTaskNum];
+      const subTaskNum = this.currSubTaskNum;
+      if (this.currentTask) {
+        switch (subTaskNum) {
+          case 1:
+            return this.currentTask.prepareTime;
+          case 2:
+            return this.currentTask.recordTime;
+          default:
+            return 5;
+        }
       } else {
         return null;
       }
+    },
+    currentTask() {
+      return this.selectedTest.tasks.reduce((a, task) => {
+        if (task.id === this.currTaskNum) {
+          a = task;
+        }
+        return a;
+      }, {});
     },
     // номер текущего задания в экзамене
     currTaskNum() {
@@ -86,13 +76,19 @@ export default {
       return this.step % 3;
     },
     isFinished() {
-      return (
-        this.step === 3 * Object.keys(this.durations[this.examType]).length
+      return this.step === 3 * this.selectedTest.tasks.length;
+    },
+    selectedTest() {
+      const filtered = this.tests.filter(
+        test =>
+          test.type === this.examType &&
+          String(test.id) === String(this.$route.params.id)
       );
+      return Array.isArray(filtered) && filtered.length ? filtered[0] : {};
     }
   },
   async created() {
-    this.start(this.durations.default);
+    this.start(this.selectedTest.waitTime);
   },
   data() {
     return {
@@ -121,7 +117,6 @@ export default {
           if (this.time > 0) {
             this.time--;
           } else {
-            //this.sound.play();
             this.stop();
           }
         }, 1000);
@@ -154,7 +149,7 @@ export default {
           });
         }
         if (!this.isFinished) {
-          this.start(this.durations.default);
+          this.start(this.selectedTest.waitTime);
         }
       } else {
         if (this.currSubTaskNum === 2 && this.stream) {
@@ -162,7 +157,7 @@ export default {
           this.recorder.start();
         }
         if (this.currentInterval) {
-          this.start(this.currentInterval * 60);
+          this.start(this.currentInterval);
         }
       }
     },
