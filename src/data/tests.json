@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your mind. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.",
+        "description": "When you hear the word «panda», Kung Fu Panda is the first thing that comes to your mind. Pandas are an extremely popular animal. They look nice. Even small children recognize a panda when they see it. Still, most present-day toddlers know about pandas from movies and not books. Pandas are also called «panda bears». The general life span of a panda is 20 years if they are wild. It can be up to 25 years if they are captive and protected. There is an interesting thing about the eye patch of the pauda. When a panda is a cub, it is circular in shape. Alony its life journey it changes to the shape of a teardrop. Pandas are only found in China. For quite a while now, Chinese people have used panda as symbol of peace. In ancient times, a white flag with a picture of panda was raised in order to declare peace during wars.",
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 5,
+        "recordTime": 5
+      },
+      {
+        "id": 2,
+        "title": "Study the advertisement.",
+        "description": "New bicycle rental! You are considering renting bicycles and now you'd like to get more information. In 1.5 minutes you are to ask five direct questions to find ont about the following:",
+        "images": ["2.png"],
+        "questions": [
+          "location",
+          "opening hours",
+          "rental price of adult's and children's bicycles",
+          "discounts for families",
+          "possibility of renting a helmet"
+        ],
+        "sequentialQuestions": true,
+        "questionsInterval": 20,
+        "selectableImages": false,
+        "note": "You have 20 seconds to ask each question.",
+        "prepareTime": 90,
+        "recordTime": 100
+      },
+      {
+        "id": 3,
+        "title": "These are photos from your photo album. Choose one photo to describe to your friend.",
+        "description": "You will have to start speaking in 1.5 minutes and will speak for not more than 2 minutes (12-15 sentences). In your talk remember to speak about:",
+        "images": ["3-1.png","3-2.png","3-3.png"],
+        "questions": [
+          "where and when the photo was taken",
+          "what who is in the photo",
+          "what is happening",
+          "why you keep the photo your album",
+          "why you decided to show the picture to your friend"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "You have to talk continuously, starting with: «I've chosen photo number... »",
+        "prepareTime": 90,
+        "recordTime": 120
+      },
+      {
+        "id": 4,
+        "title": "Study the two photographs. In 1.5 minutes be ready to compare and contrast the photographs:",
+        "description": "",
+        "images": ["4-1.png","4-2.png"],
+        "questions": [
+          "give a brief description of the photos (action, location)",
+          "say what the pictures have in common",
+          "say in what way the pictures are different",
+          "say which of the ways of watching films presented in the pictures you prefer",
+          "explain why"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "You will speak for not more than 2 minutes (12-15 sentences). You have to talk continuously.",
+        "prepareTime": 90,
+        "recordTime": 120
+      }
+    ],
+    "waitTime": 5,
+    "type": "ege"
+  }
+]
