@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-12" v-if="running">
       <div :class="'alert ' + alertClass + ' text-center'">
+        <span>{{ timerInfo }}</span>
         {{ time | timeFormat }}
       </div>
     </div>
@@ -39,6 +40,13 @@ export default {
         : this.currSubTaskNum === 1
         ? "alert-warning"
         : "alert-success";
+    },
+    timerInfo() {
+      return this.currSubTaskNum === 0
+        ? "Приготовьтесь!"
+        : this.currSubTaskNum === 1
+        ? "Время на подготовку"
+        : "Идет запись";
     },
     iterations() {
       const count = this.selectedTest.tasks.length;
