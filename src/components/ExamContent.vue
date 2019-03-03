@@ -3,13 +3,13 @@
     <span class="task-description">
       <b>Task {{ task.id }}. {{ task.title }}</b>
     </span>
-    <div v-if="task.images.length">
+    <div v-if="Array.isArray(filteredImages) && filteredImages.length">
       <img
-        class="img-thumbnail"
-        style="height: 250px; margin-bottom: 0.5rem; margin-right: 0.5rem"
+        class="task-image img-thumbnail"
         :src="'/images/' + examType + '/' + exam + '/' + image"
         :key="'image-' + index"
-        v-for="(image, index) in task.images"
+        v-for="(image, index) in filteredImages"
+        @click="selectImage(image)"
       />
     </div>
     <p>{{ task.description }}</p>
@@ -32,11 +32,28 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState(["examType"]),
+    filteredImages() {
+      return this.task.selectableImages && this.selectedImage
+        ? this.task.images.filter(image => image === this.selectedImage)
+        : this.task.images;
+    },
     filteredQuestions() {
       if (this.task.sequentialQuestions) {
         return this.task.questions;
       } else {
         return this.task.questions;
+      }
+    }
+  },
+  data() {
+    return {
+      selectedImage: null
+    };
+  },
+  methods: {
+    selectImage(name) {
+      if (this.task.selectableImages) {
+        this.selectedImage = name;
       }
     }
   },
@@ -57,5 +74,11 @@ export default {
 .task-description {
   display: block;
   margin-bottom: 1rem;
+}
+.task-image {
+  height: 250px;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
 }
 </style>
