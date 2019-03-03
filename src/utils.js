@@ -21,3 +21,9 @@ export const recordAudio = stream => {
     resolve({ start, stop });
   });
 };
+
+export const timeFormat = seconds => {
+  const sec = seconds % 60;
+  const min = seconds / 60 > 0 ? Math.floor(seconds / 60) : 0;
+  return (min > 9 ? min : "0" + min) + ":" + (sec > 9 ? sec : "0" + sec);
+};
