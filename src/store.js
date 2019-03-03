@@ -79,7 +79,7 @@ export default new Vuex.Store({
         commit("updateUserState", { loggedIn: true });
       } else {
         dispatch("showNotification", {
-          text: "Необходимо указать ваши ФИО и тип экзамена!",
+          text: "Необходимо указать ваш шифр и тип экзамена!",
           type: "error"
         });
       }
