@@ -19,7 +19,7 @@
         </router-link>
       </div>
     </div>
-    <div class="row" style="margin-top: 1rem">
+    <div class="row" style="margin-top: 2rem">
       <div class="col-12">
         <div class="card">
           <div class="card-body">
