@@ -148,7 +148,7 @@ export default {
                 ". Задание " +
                 id +
                 ". " +
-                this.userName +
+                this.userCode +
                 ".wav",
               url: audioUrl
             });
