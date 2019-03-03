@@ -19,9 +19,72 @@
         </router-link>
       </div>
     </div>
+    <div class="row" style="margin-top: 1rem">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            Для проверки микрофона и качества записи воспользуйтесь кнопками
+            "Начать запись" и "ПРослушать запись".
+            <div class="text-center" style="margin-top: 0.5rem">
+              <button
+                style="margin-right: 0.5rem"
+                :class="recordButtonClass"
+                @click="getRecord"
+              >
+                {{ !recording ? "Начать запись" : "Остановить запись" }}
+              </button>
+              <button
+                class="btn btn-sm  btn-warning"
+                :disabled="recording || !audio ? true : false"
+                @click="playAudio"
+              >
+                Прослушать запись
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+import { recordAudio } from "../recording";
+
+export default {
+  computed: {
+    ...mapState(["stream"]),
+    recordButtonClass() {
+      return "btn btn-sm " + (!this.recording ? "btn-primary" : "btn-danger");
+    }
+  },
+  data() {
+    return {
+      audio: null,
+      recorder: null,
+      recording: false
+    };
+  },
+  methods: {
+    async getRecord() {
+      if (this.stream) {
+        if (this.recording) {
+          this.recording = false;
+          const { audioUrl } = await this.recorder.stop();
+          this.audio = new Audio(audioUrl);
+        } else {
+          this.recording = true;
+          this.recorder = await recordAudio(this.stream);
+          this.recorder.start();
+        }
+      }
+    },
+    playAudio() {
+      if (this.audio) {
+        this.audio.play();
+      }
+    }
+  }
+};
 </script>
