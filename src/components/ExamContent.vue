@@ -1,10 +1,12 @@
 <template>
   <div>
     <span class="task-description">
-      <b>Task {{ task.id }}.</b> {{ task.title }}
+      <b>Task {{ task.id }}. {{ task.title }}</b>
     </span>
     <div v-if="task.images.length">
       <img
+        class="img-thumbnail"
+        style="height: 250px; margin-bottom: 0.5rem; margin-right: 0.5rem"
         :src="'/images/' + examType + '/' + exam + '/' + image"
         :key="'image-' + index"
         v-for="(image, index) in task.images"
