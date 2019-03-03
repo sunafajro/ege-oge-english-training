@@ -12,8 +12,8 @@
         "questionsInterval": 0,
         "selectableImages": false,
         "note": "",
-        "prepareTime": 90,
-        "recordTime": 90
+        "prepareTime": 89,
+        "recordTime": 89
       },
       {
         "id": 2,
@@ -28,11 +28,11 @@
           "possibility of renting a helmet"
         ],
         "sequentialQuestions": true,
-        "questionsInterval": 20,
+        "questionsInterval": 19,
         "selectableImages": false,
         "note": "You have 20 seconds to ask each question.",
-        "prepareTime": 90,
-        "recordTime": 100
+        "prepareTime": 4,
+        "recordTime": 99
       },
       {
         "id": 3,
@@ -50,8 +50,8 @@
         "questionsInterval": 0,
         "selectableImages": true,
         "note": "You have to talk continuously, starting with: «I've chosen photo number... »",
-        "prepareTime": 90,
-        "recordTime": 120
+        "prepareTime": 89,
+        "recordTime": 119
       },
       {
         "id": 4,
@@ -69,11 +69,11 @@
         "questionsInterval": 0,
         "selectableImages": false,
         "note": "You will speak for not more than 2 minutes (12-15 sentences). You have to talk continuously.",
-        "prepareTime": 90,
-        "recordTime": 120
+        "prepareTime": 89,
+        "recordTime": 119
       }
     ],
-    "waitTime": 5,
+    "waitTime": 4,
     "type": "ege"
   }
 ]
