@@ -50,7 +50,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { recordAudio } from "../recording";
+import { recordAudio } from "../utils";
 
 export default {
   computed: {

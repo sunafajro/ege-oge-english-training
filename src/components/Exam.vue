@@ -26,7 +26,7 @@
 <script>
 import { mapState } from "vuex";
 import ExamContent from "./ExamContent.vue";
-import { recordAudio } from "../recording";
+import { recordAudio, timeFormat } from "../utils";
 
 export default {
   components: {
@@ -109,9 +109,7 @@ export default {
   },
   filters: {
     timeFormat(seconds) {
-      const sec = seconds % 60;
-      const min = seconds / 60 > 0 ? Math.floor(seconds / 60) : 0;
-      return (min > 9 ? min : "0" + min) + ":" + (sec > 9 ? sec : "0" + sec);
+      return timeFormat(seconds);
     }
   },
   methods: {
