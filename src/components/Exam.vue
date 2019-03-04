@@ -1,13 +1,32 @@
 <template>
   <div class="row">
     <div class="col-12" v-if="running">
-      <div :class="'alert ' + alertClass + ' text-center'">
-        <span>{{ timerInfo }}</span>
-        {{ time | timeFormat }}
+      <div :class="'alert alert-' + alertClass">
+        <div class="row align-items-center">
+          <div class="col-4 text-left">
+            {{ timerInfo }}
+          </div>
+          <div class="col-4 text-center">
+            {{ time | timeFormat }}
+          </div>
+          <div class="col-4 text-right">
+            <button
+              @click="stop"
+              :class="'btn btn-sm btn-' + alertClass"
+              v-if="this.currSubTaskNum !== 0"
+            >
+              закончить досрочно
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12" v-if="currSubTaskNum !== 0">
-      <e-content-component :exam="$route.params.id" :task="currentTask" />
+      <e-content-component
+        :exam="$route.params.id"
+        :currSubTaskNum="currSubTaskNum"
+        :task="currentTask"
+      />
     </div>
     <div class="col-12" v-if="isFinished">
       <p>
@@ -36,10 +55,10 @@ export default {
     ...mapState(["audioUrls", "tests", "examType", "stream", "userCode"]),
     alertClass() {
       return this.currSubTaskNum === 0
-        ? "alert-info"
+        ? "info"
         : this.currSubTaskNum === 1
-        ? "alert-warning"
-        : "alert-success";
+        ? "warning"
+        : "success";
     },
     timerInfo() {
       return this.currSubTaskNum === 0
@@ -54,9 +73,8 @@ export default {
     },
     // продолжительность текущего интервала для задания
     currentInterval() {
-      const subTaskNum = this.currSubTaskNum;
       if (this.currentTask) {
-        switch (subTaskNum) {
+        switch (this.currSubTaskNum) {
           case 1:
             return this.currentTask.prepareTime;
           case 2:

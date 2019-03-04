@@ -13,9 +13,20 @@
       />
     </div>
     <p>{{ task.description }}</p>
-    <p v-if="selectedQuestion !== null">
-      {{ time | timeFormat }}
-    </p>
+    <div
+      style="margin-bottom: 0.5rem"
+      v-if="this.task.sequentialQuestions && this.selectedQuestion !== null"
+    >
+      <div
+        class="btn btn-sm btn-success"
+        style="margin-right: 0.5rem; width: 50px"
+      >
+        {{ time | timeFormat }}
+      </div>
+      <button class="btn btn-sm btn-success" @click="stop">
+        следующий ответ
+      </button>
+    </div>
     <ul v-if="filteredQuestions.length">
       <li
         :key="'question-' + index"
@@ -51,11 +62,6 @@ export default {
       } else {
         return this.task.questions;
       }
-    }
-  },
-  created() {
-    if (this.task.sequentialQuestions) {
-      this.start(this.task.prepareTime);
     }
   },
   data() {
@@ -95,12 +101,11 @@ export default {
       clearInterval(this.timer);
       this.time = 0;
       this.timer = null;
-      if (this.selectedQuestion === null) {
-        this.selectedQuestion = 0;
-        this.start(this.task.questionsInterval);
-      } else if (this.selectedQuestion < this.task.questions.length - 1) {
+      if (this.selectedQuestion < this.task.questions.length - 1) {
         this.selectedQuestion += 1;
         this.start(this.task.questionsInterval);
+      } else {
+        this.selectedQuestion = null;
       }
     }
   },
@@ -109,9 +114,21 @@ export default {
       required: true,
       type: String
     },
+    currSubTaskNum: {
+      required: true,
+      type: Number
+    },
     task: {
       required: true,
       type: Object
+    }
+  },
+  watch: {
+    currSubTaskNum(value) {
+      if (this.task.sequentialQuestions && value === 2) {
+        this.selectedQuestion = 0;
+        this.start(this.task.questionsInterval);
+      }
     }
   }
 };
