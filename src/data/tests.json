@@ -6,6 +6,7 @@
         "id": 1,
         "title": "Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your mind. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.",
         "description": "When you hear the word «panda», Kung Fu Panda is the first thing that comes to your mind. Pandas are an extremely popular animal. They look nice. Even small children recognize a panda when they see it. Still, most present-day toddlers know about pandas from movies and not books. Pandas are also called «panda bears». The general life span of a panda is 20 years if they are wild. It can be up to 25 years if they are captive and protected. There is an interesting thing about the eye patch of the pauda. When a panda is a cub, it is circular in shape. Alony its life journey it changes to the shape of a teardrop. Pandas are only found in China. For quite a while now, Chinese people have used panda as symbol of peace. In ancient times, a white flag with a picture of panda was raised in order to declare peace during wars.",
+        "audio": null,
         "images": [],
         "questions": [],
         "sequentialQuestions": false,
@@ -19,6 +20,7 @@
         "id": 2,
         "title": "Study the advertisement.",
         "description": "New bicycle rental! You are considering renting bicycles and now you'd like to get more information. In 1.5 minutes you are to ask five direct questions to find ont about the following:",
+        "audio": null,
         "images": ["2.png"],
         "questions": [
           "location",
@@ -38,6 +40,7 @@
         "id": 3,
         "title": "These are photos from your photo album. Choose one photo to describe to your friend.",
         "description": "You will have to start speaking in 1.5 minutes and will speak for not more than 2 minutes (12-15 sentences). In your talk remember to speak about:",
+        "audio": null,
         "images": ["3-1.png","3-2.png","3-3.png"],
         "questions": [
           "where and when the photo was taken",
@@ -57,6 +60,7 @@
         "id": 4,
         "title": "Study the two photographs. In 1.5 minutes be ready to compare and contrast the photographs:",
         "description": "",
+        "audio": null,
         "images": ["4-1.png","4-2.png"],
         "questions": [
           "give a brief description of the photos (action, location)",
@@ -75,5 +79,58 @@
     ],
     "waitTime": 4,
     "type": "ege"
+  },
+  {
+    "id": 2,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "You are going to read the text aloud. You have 1.5 minutes to read the text silently, and then be ready to read it aloud. Remember that you will not have more than 2 minutes for reading aloud.",
+        "description": "The ninth planet of the solar system was discovered not long ago. It happened in 1930. Scientists had been hunting for the planet for a long time. They had calculated its probable position but there was no proof that the planet really existed. It was too far away for the telescopes of that time to find it. It's worth mentioning that the first photos of the planet were taken by a very young researcher. He was only twenty-four and had no formal education in astronomy. However he was deeply involved in the search for the ninth planet. The planet at the edge of the solar system was called Pluto, after the Roman god. The name for the planet was suggested by an 11-year-old British girl.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 2,
+        "title": "",
+        "description": "",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": true,
+        "questionsInterval": 39,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 99
+      },
+      {
+        "id": 3,
+        "title": "You are going to give a talk about photography. You will have to start in 1.5 minutes and speak for not more than 2 minutes (10-12 sentences).",
+        "description": "Remember to say:",
+        "audio": null,
+        "images": [],
+        "questions": [
+          "why people like taking pictures",
+          "why taking photos is more popular today than it was in the past",
+          "what the best photo you have ever taken is"
+        ],
+        "sequentialQuestions": true,
+        "questionsInterval": 40,
+        "selectableImages": true,
+        "note": "You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "oge"
   }
 ]
