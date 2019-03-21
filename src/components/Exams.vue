@@ -7,7 +7,7 @@
         :to="'/exam/' + test.id"
         v-for="test in selectedTests"
       >
-        Вариант {{ test.id }}
+        Вариант {{ test.num }}
       </router-link>
     </div>
   </div>

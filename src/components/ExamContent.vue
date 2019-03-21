@@ -12,7 +12,9 @@
         @click="selectImage(image)"
       />
     </div>
-    <p>{{ task.description }}</p>
+    <p>
+      {{ !task.audio ? task.description : "" }}
+    </p>
     <div
       style="margin-bottom: 0.5rem"
       v-if="this.task.sequentialQuestions && this.selectedQuestion !== null"
@@ -27,12 +29,12 @@
         следующий ответ
       </button>
     </div>
-    <ul v-if="filteredQuestions.length">
+    <ul v-if="!task.audio && filteredQuestions.length">
       <li
         :key="'question-' + index"
         v-for="(question, index) in filteredQuestions"
       >
-        {{ question }}
+        {{ !task.audio ? question : "Question" }}
       </li>
     </ul>
     <p v-if="task.note">
@@ -46,6 +48,22 @@ import { mapState } from "vuex";
 import { timeFormat } from "../utils";
 
 export default {
+  created() {
+    if (this.task.audio && this.task.id === 2) {
+      if (this.currentAudio) {
+        this.currentAudio.pause();
+      }
+      this.currentAudio = new Audio("/audio/" + this.task.description);
+      this.currentAudio.play();
+    }
+  },
+  destroyed() {
+    if (this.task.audio && this.task.id === 2) {
+      if (this.currentAudio) {
+        this.currentAudio.pause();
+      }
+    }
+  },
   computed: {
     ...mapState(["examType"]),
     filteredImages() {
@@ -66,6 +84,7 @@ export default {
   },
   data() {
     return {
+      currentAudio: null,
       selectedQuestion: null,
       selectedImage: null,
       time: 0,
@@ -128,6 +147,15 @@ export default {
       if (this.task.sequentialQuestions && value === 2) {
         this.selectedQuestion = 0;
         this.start(this.task.questionsInterval);
+      }
+    },
+    filteredQuestions(q) {
+      if (this.task.audio && this.task.id === 2 && q.length === 1) {
+        if (this.currentAudio) {
+          this.currentAudio.pause();
+        }
+        this.currentAudio = new Audio("/audio/" + q[0]);
+        this.currentAudio.play();
       }
     }
   }
