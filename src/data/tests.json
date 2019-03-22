@@ -106,19 +106,14 @@
         "audio": true,
         "images": [],
         "questions": [
-          "oge-1-question-1.mp3",
-          "oge-1-question-2.mp3",
-          "oge-1-question-3.mp3",
-          "oge-1-question-4.mp3",
-          "oge-1-question-5.mp3",
-          "oge-1-question-6.mp3"
+          "oge-1-questions.mp3"
         ],
-        "sequentialQuestions": true,
-        "questionsInterval": 49,
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
         "selectableImages": false,
         "note": "",
-        "prepareTime": 89,
-        "recordTime": 299
+        "prepareTime": 29,
+        "recordTime": 319
       },
       {
         "id": 3,
@@ -131,8 +126,8 @@
           "why taking photos is more popular today than it was in the past",
           "what the best photo you have ever taken is"
         ],
-        "sequentialQuestions": true,
-        "questionsInterval": 40,
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
         "selectableImages": true,
         "note": "You have to talk continuously.",
         "prepareTime": 89,
