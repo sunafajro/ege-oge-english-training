@@ -6,7 +6,7 @@
     <div id="app" class="container">
       <div class="row header-title">
         <div class="col-12 text-center">
-          <h3>Пробные тесты ОГЭ/ЕГЭ по английскому</h3>
+          <h3>Пробные тесты {{ headerName }} по английскому языку</h3>
         </div>
       </div>
       <router-view />
@@ -43,7 +43,16 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["audioUrls", "loggedIn", "micAccess", "userCode"])
+    ...mapState(["audioUrls", "examType", "loggedIn", "micAccess", "userCode"]),
+    headerName() {
+      if (this.examType === "oge") {
+        return "ОГЭ";
+      } else if (this.examType === "ege") {
+        return "ЕГЭ";
+      } else {
+        return "ОГЭ/ЕГЭ";
+      }
+    }
   },
   created() {
     if (!this.micAccess) {
