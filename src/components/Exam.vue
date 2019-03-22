@@ -108,7 +108,7 @@ export default {
       const filtered = this.tests.filter(
         test =>
           test.type === this.examType &&
-          String(test.id) === String(this.$route.params.id)
+          String(test.num) === String(this.$route.params.id)
       );
       return Array.isArray(filtered) && filtered.length ? filtered[0] : {};
     }

@@ -3,8 +3,9 @@
     <div class="col-4">
       <router-link
         class="btn btn-info"
-        :key="test.id"
-        :to="'/exam/' + test.id"
+        style="margin-right: 0.5rem"
+        :key="test.num"
+        :to="'/exam/' + test.num"
         v-for="test in selectedTests"
       >
         Вариант {{ test.num }}

@@ -6,6 +6,7 @@
     <div v-if="Array.isArray(filteredImages) && filteredImages.length">
       <img
         class="task-image img-thumbnail"
+        style="height: 210px"
         :src="'/images/' + examType + '/' + exam + '/' + image"
         :key="'image-' + index"
         v-for="(image, index) in filteredImages"
