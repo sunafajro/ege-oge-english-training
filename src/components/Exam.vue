@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import ExamContent from "./ExamContent.vue";
 import { recordAudio, timeFormat } from "../utils";
 
@@ -131,6 +131,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["logout"]),
     start(s) {
       if (s) {
         this.time = s;
@@ -187,7 +188,7 @@ export default {
     },
     goToExamsList() {
       this.$store.commit("updateAudioUrls", []);
-      this.$router.push("/exams");
+      this.logout();
     }
   }
 };

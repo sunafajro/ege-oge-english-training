@@ -17,7 +17,11 @@
     </p>
     <div
       style="margin-bottom: 0.5rem"
-      v-if="this.task.sequentialQuestions && this.selectedQuestion !== null"
+      v-if="
+        !this.task.audio &&
+          this.task.sequentialQuestions &&
+          this.selectedQuestion !== null
+      "
     >
       <div
         class="btn btn-sm btn-success"
@@ -34,7 +38,7 @@
         :key="'question-' + index"
         v-for="(question, index) in filteredQuestions"
       >
-        {{ !task.audio ? question : "Question" }}
+        {{ question }}
       </li>
     </ul>
     <p v-if="task.note">
@@ -147,14 +151,15 @@ export default {
       if (this.task.sequentialQuestions && value === 2) {
         this.selectedQuestion = 0;
         this.start(this.task.questionsInterval);
-      }
-    },
-    filteredQuestions(q) {
-      if (this.task.audio && this.task.id === 2 && q.length === 1) {
+      } else if (
+        !this.task.sequentialQuestions &&
+        value === 2 &&
+        this.task.audio
+      ) {
         if (this.currentAudio) {
           this.currentAudio.pause();
         }
-        this.currentAudio = new Audio("/audio/" + q[0]);
+        this.currentAudio = new Audio("/audio/" + this.task.questions[0]);
         this.currentAudio.play();
       }
     }
