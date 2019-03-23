@@ -7,7 +7,12 @@
             {{ timerInfo }}
           </div>
           <div class="col-4 text-center">
-            {{ time | timeFormat }}
+            <span v-if="currTaskNum !== 2">
+              {{ time | timeFormat }}
+            </span>
+            <span v-if="currTaskNum === 2 && currSubTaskNum !== 2">
+              {{ time | timeFormat }}
+            </span>
           </div>
           <div class="col-4 text-right">
             <button

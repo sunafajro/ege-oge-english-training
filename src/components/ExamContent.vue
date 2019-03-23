@@ -3,15 +3,21 @@
     <span class="task-description">
       <b>Task {{ task.id }}. {{ task.title }}</b>
     </span>
-    <div v-if="Array.isArray(filteredImages) && filteredImages.length">
-      <img
-        class="task-image img-thumbnail"
-        style="height: 210px"
-        :src="'/images/' + examType + '/' + exam + '/' + image"
-        :key="'image-' + index"
-        v-for="(image, index) in filteredImages"
-        @click="selectImage(image)"
-      />
+    <div
+      style="display: flex"
+      v-if="Array.isArray(filteredImages) && filteredImages.length"
+    >
+      <div :key="'image-' + index" v-for="(image, index) in filteredImages">
+        <b style="vertical-align: top">
+          {{ !selectedImage ? index + 1 : selectedImageId }}
+        </b>
+        <img
+          class="task-image img-thumbnail"
+          style="height: 210px"
+          :src="'/images/' + examType + '/' + exam + '/' + image"
+          @click="selectImage(image)"
+        />
+      </div>
     </div>
     <p>
       {{ !task.audio ? task.description : "" }}
@@ -85,6 +91,19 @@ export default {
       } else {
         return this.task.questions;
       }
+    },
+    selectedImageId() {
+      let num = null;
+      if (this.task.selectableImages && this.selectedImage) {
+        if (this.selectedImage) {
+          this.task.images.forEach((image, index) => {
+            if (image === this.selectedImage) {
+              num = index + 1;
+            }
+          });
+        }
+      }
+      return num;
     }
   },
   data() {

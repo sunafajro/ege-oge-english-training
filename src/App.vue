@@ -3,13 +3,17 @@
     <div class="alert alert-danger" v-if="!micAccess">
       Нет доступа к микрофону на вашем устройстве!
     </div>
-    <div id="app" class="container">
+    <div id="app" class="container-fluid">
       <div class="row header-title">
         <div class="col-12 text-center">
           <h3>Пробные тесты {{ headerName }} по английскому языку</h3>
         </div>
       </div>
-      <router-view />
+      <div class="row">
+        <div class="col-10 offset-1">
+          <router-view />
+        </div>
+      </div>
     </div>
     <div class="bottom-panel" v-if="loggedIn">
       <div class="alert alert-info">
