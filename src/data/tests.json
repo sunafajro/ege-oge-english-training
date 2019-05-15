@@ -276,5 +276,143 @@
     ],
     "waitTime": 4,
     "type": "oge"
+  },
+  {
+    "id": 5,
+    "num": 3,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your mind. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.",
+        "description": "The Garrick Club, which has the slogan “All the World’s a Stage”, was founded by the Duke of Sussex in 1831, in order to encourage theatre in London. Named after the 18th-century thespian David Garrick, it is a club “instituted for the general patronage of drama”. Though Channel 4 has been a strong supporter of women’s rights, the Garrick Club is for men only. Ladies are only permitted to accompany members to lunch or dinner as their guests and are excluded from the cocktail bar. The famous members include composer Edward Elgar and the writers Charles Dickens and Anthony Trollope.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 89
+      },
+      {
+        "id": 2,
+        "title": "Study the advertisement.",
+        "description": ". You are organizing a birthday celebration for your friend, now you’d like to get more information. In 1.5 minutes you are to ask five direct questions to find out about the following:",
+        "audio": null,
+        "images": ["2.png"],
+        "questions": [
+          "if you can book a table for 5 people",
+          "website for the café",
+          "if you can book a table online",
+          "discounts for students",
+          "address "
+        ],
+        "sequentialQuestions": true,
+        "questionsInterval": 19,
+        "selectableImages": false,
+        "note": "You have 20 seconds to ask each question.",
+        "prepareTime": 89,
+        "recordTime": 99
+      },
+      {
+        "id": 3,
+        "title": "These are photos from your photo album. Choose one photo to describe to your friend.",
+        "description": "You will have to start speaking in 1.5 minutes and will speak for not more than 2 minutes (12-15 sentences). In your talk remember to speak about:",
+        "audio": null,
+        "images": ["3-1.png","3-2.png","3-3.png"],
+        "questions": [
+          "where and when the photo was taken",
+          "what/who is in the photo",
+          "what is happening",
+          "why you keep this photo in your album",
+          "why you decided to show the picture to your friend"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "Click to the photo which you selected. You have to talk continuously, starting with: «I've chosen photo number... »",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 4,
+        "title": "Study the two photographs. In 1.5 minutes be ready to compare and contrast the photographs:",
+        "description": "",
+        "audio": null,
+        "images": ["4-1.png","4-2.png"],
+        "questions": [
+          "give a brief description of the photos (action, location)",
+          "say what the pictures have in common",
+          "say in what way the pictures are different",
+          "say which kind of holidays presented in the pictures you’d prefer",
+          "explain why"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "You will speak for not more than 2 minutes (12-15 sentences). You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "ege"
+  },
+  {
+    "id": 6,
+    "num": 3,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "You are going to read the text aloud. You have 1.5 minutes to read the text silently, and then be ready to read it aloud. Remember that you will not have more than 2 minutes for reading aloud.",
+        "description": "Traditional Russian souvenirs are popular all over the globe. The matryoshka is the best known gift from Russia. It is a set of painted wooden dolls of different sizes that are hidden one inside the other. In some rare cases there can be 50 dolls and even more. Traditionally these dolls are painted dressed in a Russian dress with a headscarf. Khokhloma is another traditional Russian craft which originated in the 17th century. It is a style of painting on wooden dishes and furniture. This beautiful and unique style can be recognized for its red and gold flowers on a dark background.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 2,
+        "title": "Audio only task.",
+        "description": "oge-3-description.mp3",
+        "audio": true,
+        "images": [],
+        "questions": [
+          "oge-3-questions.mp3"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 29,
+        "recordTime": 319
+      },
+      {
+        "id": 3,
+        "title": "You are going to give a talk about traditions. You will have to start in 1,5 minutes and speak for not more than 2 minutes.",
+        "description": "Remember to say:",
+        "audio": null,
+        "images": [],
+        "questions": [
+          "why traditions are important",
+          "what traditions people have in your city, town",
+          "what traditions do you have in your families and where they began"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "oge"
   }
 ]
