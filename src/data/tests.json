@@ -483,7 +483,7 @@
           "give a brief description of the photos (action, location)",
           "say what the pictures have in common",
           "say in what way the pictures are different",
-          "say which kind of holidays presented in the pictures you’d prefer",
+          "say which kind of cars presented in the pictures you’d prefer",
           "explain why"
         ],
         "sequentialQuestions": false,
