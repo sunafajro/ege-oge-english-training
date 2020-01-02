@@ -2,8 +2,7 @@
   <div class="row">
     <div class="col-4">
       <router-link
-        class="btn btn-info"
-        style="margin-right: 0.5rem"
+        class="btn btn-info ml-1 mb-1"
         :key="test.num"
         :to="'/exam/' + test.num"
         v-for="test in selectedTests"
