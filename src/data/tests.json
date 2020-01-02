@@ -498,7 +498,7 @@
     "type": "ege"
   },
   {
-    "id": 7,
+    "id": 8,
     "num": 4,
     "tasks": [
       {
@@ -553,5 +553,87 @@
     ],
     "waitTime": 4,
     "type": "oge"
+  },
+  {
+    "id": 9,
+    "num": 5,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your friend. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.",
+        "description": "Quality of life is the general well-being of individuals. Standard indicators of the quality of life include not only wealth and employment but also the environment, physical and mental health, education, recreation and leisure time, and social belonging. This means that quality of life is getting better if people have enough money, if they have some useful job to do, if they live in a friendly environment, if they have healthy bodies and minds, if they are educated enough, if they have an opportunity to enjoy rest and entertainment and if they belong to a family, a group of friends, a professional community and to a society as a whole. Many people these days think that their quality of life is not good enough if they do not have a chance to travel. Others might complain that they do not see enough attention from others and do not have the needed education. Any assessment is certainly subjective.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 89
+      },
+      {
+        "id": 2,
+        "title": "Study the advertisement.",
+        "description": "You are considering buying a school uniform for your little sister and now you’d like to get more information. In 1.5 minutes you are to ask five direct questions to find out about the following:",
+        "audio": null,
+        "images": ["2.jpg"],
+        "questions": [
+          "online catalog",
+          "availability of all-natural fabric uniforms",
+          "uniform for PE classes",
+          "payment methods",
+          "return policy"
+        ],
+        "sequentialQuestions": true,
+        "questionsInterval": 19,
+        "selectableImages": false,
+        "note": "You have 20 seconds to ask each question.",
+        "prepareTime": 89,
+        "recordTime": 99
+      },
+      {
+        "id": 3,
+        "title": "These are photos from your photo album. Choose one photo to describe to your friend.",
+        "description": "You will have to start speaking in 1.5 minutes and will speak for not more than 2 minutes (12-15 sentences). In your talk remember to speak about:",
+        "audio": null,
+        "images": ["3-1.jpg","3-2.jpg","3-3.jpg"],
+        "questions": [
+          "where and when the photo was taken",
+          "what/who is in the photo",
+          "what is happening",
+          "why you keep this photo in your album",
+          "why you decided to show the picture to your friend"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "Click to the photo which you selected. You have to talk continuously, starting with: «I've chosen photo number...»",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 4,
+        "title": "Study the two photographs. In 1.5 minutes be ready to compare and contrast the photographs:",
+        "description": "",
+        "audio": null,
+        "images": ["4-1.jpg","4-2.png"],
+        "questions": [
+          "give a brief description of the photos (action, location)",
+          "say what the pictures have in common",
+          "say in what way the pictures are different",
+          "say what kind of food presented in the pictures you preferred in your childhood",
+          "explain why"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "You will speak for not more than 2 minutes (12-15 sentences). You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "ege"
   }
 ]
