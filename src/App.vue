@@ -34,7 +34,7 @@
             {{ " " }}
             <b>{{ userCode }}</b>
             {{ " " }}
-            <span class="logout-link" @click="logout">(Выйти)</span>
+            <span class="logout-link" @click="goToExamsList">(Выйти)</span>
           </div>
         </div>
       </div>
@@ -64,7 +64,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["checkMicrofone", "logout", "showNotification"])
+    ...mapActions(["checkMicrofone", "logout", "showNotification"]),
+    goToExamsList() {
+      this.$store.commit("updateAudioUrls", []);
+      this.logout();
+    }
   }
 };
 </script>

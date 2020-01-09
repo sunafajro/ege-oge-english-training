@@ -92,12 +92,14 @@ export default {
       }
     },
     currentTask() {
-      return this.selectedTest.tasks.reduce((a, task) => {
-        if (task.id === this.currTaskNum) {
-          a = task;
-        }
-        return a;
-      }, {});
+      return Array.isArray(this.selectedTest.tasks)
+        ? this.selectedTest.tasks.reduce((a, task) => {
+            if (task.id === this.currTaskNum) {
+              a = task;
+            }
+            return a;
+          }, {})
+        : {};
     },
     // номер текущего задания в экзамене
     currTaskNum() {

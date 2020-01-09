@@ -40,7 +40,7 @@
         следующий ответ
       </button>
     </div>
-    <ul v-if="!task.audio && filteredQuestions.length">
+    <ul v-if="!task.audio && filteredQuestions.length && !taskEnded">
       <li
         :key="'question-' + index"
         v-for="(question, index) in filteredQuestions"
@@ -111,6 +111,7 @@ export default {
       currentAudio: null,
       selectedQuestion: null,
       selectedImage: null,
+      taskEnded: false,
       time: 0,
       timer: null
     };
@@ -149,6 +150,7 @@ export default {
         this.start(this.task.questionsInterval);
       } else {
         this.selectedQuestion = null;
+        this.taskEnded = true;
       }
     }
   },
