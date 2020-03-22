@@ -871,7 +871,9 @@
         "title": "You are going to give a talk about the Internet. You will have to start in 1,5 minutes and speak for not more than 2 minutes.",
         "description": "Remember to say:",
         "audio": null,
-        "images": [],
+        "images": [
+          "3.jpg"
+        ],
         "questions": [
           "why today’s teenagers use the Internet so much",
           "how the Internet makes long-distance communication easier",
