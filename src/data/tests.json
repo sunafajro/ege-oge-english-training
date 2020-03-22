@@ -749,5 +749,144 @@
     ],
     "waitTime": 4,
     "type": "oge"
+  },
+  {
+    "id": 13,
+    "num": 7,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your friend. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.",
+        "description": "A 70-year-old Japanese man has become the oldest person to climb Mount Everest. He made it to the top of the world's highest peak a week before the 50th anniversary of the first ascent. The old man himself, his son and seven others reached the summit via the south-east ridge route taken in 1953. The headmaster and former professional skier was one of many people to scale Everest on that day. He said it was a dream come true. He shattered the record previously held by another Japanese man, who was 65 when he conquered Everest last year. A record number of people are on the mountain to mark the anniversary. But until successful ascents from the north side, bad weather had thwarted all attempts this year. There have been fears that the large numbers climbing at the same time could create the potential for disaster. The first people to reach the top from the south side were the Nepalese and Indian army expeditions, followed by other climbers.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 89
+      },
+      {
+        "id": 2,
+        "title": "Study the advertisement.",
+        "description": "You are considering buying a pair of new jeans and now youd like to get more information. In 1.5 minutes you are to ask five direct questions to find out about the following:",
+        "audio": null,
+        "images": ["2.jpg"],
+        "questions": [
+          "the best brand of the jeans",
+          "available sizes",
+          "the cloth that the jeans are made of",
+          "online payment options",
+          "the fashionable accessories to match the jeans"
+        ],
+        "sequentialQuestions": true,
+        "questionsInterval": 19,
+        "selectableImages": false,
+        "note": "You have 20 seconds to ask each question.",
+        "prepareTime": 89,
+        "recordTime": 99
+      },
+      {
+        "id": 3,
+        "title": "These are photos from your photo album. Choose one photo to describe to your friend.",
+        "description": "You will have to start speaking in 1.5 minutes and will speak for not more than 2 minutes (12-15 sentences). In your talk remember to speak about:",
+        "audio": null,
+        "images": ["3-1.jpg","3-2.jpg","3-3.jpg"],
+        "questions": [
+          "where and when the photo was taken",
+          "what/who is in the photo",
+          "what is happening",
+          "why you keep this photo in your album",
+          "why you decided to show the picture to your friend"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "Click to the photo which you selected. You have to talk continuously, starting with: «I've chosen photo number...»",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 4,
+        "title": "Study the two photographs. In 1.5 minutes be ready to compare and contrast the photographs:",
+        "description": "",
+        "audio": null,
+        "images": ["4-1.jpg","4-2.jpg"],
+        "questions": [
+          "give a brief description of the photos (action, location)",
+          "say what the pictures have in common",
+          "say in what way the pictures are different",
+          "say which street performance presented in the pictures you prefer",
+          "explain why"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "You will speak for not more than 2 minutes (12-15 sentences). You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "ege"
+  },
+  {
+    "id": 14,
+    "num": 7,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "You are going to read the text aloud. You have 1.5 minutes to read the text silently, and then be ready to read it aloud. Remember that you will not have more than 2 minutes for reading aloud.",
+        "description": "Table tennis is the third most played sport in the world after football and cricket. It is considered to be an indoor version of Lawn Tennis. However, they have a lot of differences. Table tennis has a different scoring system, a smaller ball, smaller rackets, and a smaller playing area. Modern table tennis was invented at the end of the 19th century in England. Very soon the new sport became popular all over the world. In 1901, competitions with over 300 participants were already being held. According to numerous studies, table tennis has great effects on human health. It keeps the brain sharp and improves the player’s coordination. Since 1988, table tennis has been an Olympic sport.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 2,
+        "title": "Audio only task.",
+        "description": "oge-7-description.mp3",
+        "audio": true,
+        "images": [],
+        "questions": [
+          "oge-7-questions.mp3"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 29,
+        "recordTime": 319
+      },
+      {
+        "id": 3,
+        "title": "You are going to give a talk about the Internet. You will have to start in 1,5 minutes and speak for not more than 2 minutes.",
+        "description": "Remember to say:",
+        "audio": null,
+        "images": [],
+        "questions": [
+          "why today’s teenagers use the Internet so much",
+          "how the Internet makes long-distance communication easier",
+          "what dangers teenagers can face when they use the Internet",
+          "what your attitude to the Internet is"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "oge"
   }
 ]
