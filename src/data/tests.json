@@ -998,10 +998,10 @@
       },
       {
         "id": 3,
-        "title": "You are going to give a talk about seasons and weather. You will have to start in 1.5 minutes and speak for not more than 2 minutes (10–12 sentences).",
+        "title": "You are going to give a talk about your best friend. You will have to start in 1.5 minutes and speak for not more than 2 minutes (10–12 sentences).",
         "description": "Remember to say:",
         "audio": null,
-        "images": [],
+        "images": ["3.jpg"],
         "questions": [
           "what people need friends fo",
           "how long you and your friend have known each other",
