@@ -1,8 +1,8 @@
 /* global navigator */
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 import Noty from "noty";
-import tests from "./data/tests.json";
 
 Vue.use(Vuex);
 
@@ -14,7 +14,7 @@ export default new Vuex.Store({
     micAccess: null,
     step: 0,
     stream: null,
-    tests,
+    tests: [],
     userCode: ""
   },
   getters: {
@@ -36,6 +36,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    updateTests(state, data) {
+      state.tests = data.filter(item => item.enabled);
+    },
     updateAudioUrls(state, data) {
       state.audioUrls = data;
     },
@@ -56,6 +59,17 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async getTests({ commit, dispatch }) {
+      try {
+        const { data: tests } = await axios.get("/js/data.json");
+        commit("updateTests", tests);
+      } catch (e) {
+        dispatch("showNotification", {
+          text: "Ошибка загрузки тестов! " + (e && e.message ? e.message : ""),
+          type: "error"
+        });
+      }
+    },
     async checkMicrofone({ commit, dispatch }) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({

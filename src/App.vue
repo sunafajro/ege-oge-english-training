@@ -58,13 +58,14 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
+    await this.getTests();
     if (!this.micAccess) {
       this.checkMicrofone();
     }
   },
   methods: {
-    ...mapActions(["checkMicrofone", "logout", "showNotification"]),
+    ...mapActions(["checkMicrofone", "getTests", "logout", "showNotification"]),
     goToExamsList() {
       this.$store.commit("updateAudioUrls", []);
       this.logout();

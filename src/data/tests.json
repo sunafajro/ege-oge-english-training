@@ -79,7 +79,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "ege"
+    "type": "ege",
+    "enabled":true
   },
   {
     "id": 2,
@@ -135,7 +136,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "oge"
+    "type": "oge",
+    "enabled":true
   },
   {
     "id": 3,
@@ -217,7 +219,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "ege"
+    "type": "ege",
+    "enabled":true
   },
   {
     "id": 4,
@@ -275,7 +278,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "oge"
+    "type": "oge",
+    "enabled":true
   },
   {
     "id": 5,
@@ -357,7 +361,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "ege"
+    "type": "ege",
+    "enabled":true
   },
   {
     "id": 6,
@@ -413,7 +418,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "oge"
+    "type": "oge",
+    "enabled":true
   },
   {
     "id": 7,
@@ -495,7 +501,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "ege"
+    "type": "ege",
+    "enabled":true
   },
   {
     "id": 8,
@@ -552,7 +559,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "oge"
+    "type": "oge",
+    "enabled":true
   },
   {
     "id": 9,
@@ -634,7 +642,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "ege"
+    "type": "ege",
+    "enabled":true
   },
   {
     "id": 10,
@@ -691,7 +700,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "oge"
+    "type": "oge",
+    "enabled":true
   },
   {
     "id": 12,
@@ -748,7 +758,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "oge"
+    "type": "oge",
+    "enabled":true
   },
   {
     "id": 13,
@@ -830,7 +841,8 @@
       }
     ],
     "waitTime": 4,
-    "type": "ege"
+    "type": "ege",
+    "enabled":true
   },
   {
     "id": 14,
@@ -889,6 +901,123 @@
       }
     ],
     "waitTime": 4,
-    "type": "oge"
+    "type": "oge",
+    "enabled":true
+  },
+  {
+    "id": 16,
+    "num": 8,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "You are going to read the text aloud. You have 1.5 minutes to read the text silently, and then be ready to read it aloud. Remember that you will not have more than 2 minutes for reading aloud.",
+        "description": "The rainforest can be described as a thick and very tall jungle. The term rain comes from the great quantity of water that these forests get throughout the year. The rainforests are the world's greatest natural resources. They are called the lungs of our planet. Half of all the kinds of plants and animals that exist on the planet live in the rainforests. Unfortunately, the area with rainforests is being reduced due to global warming. 100 years ago, the rainforests covered 14 per cent of the earth’s surface. Now, it is only 6 per cent. Scientists say that if the process continues at this rate, the rainforests will have disappeared in 40 years.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 2,
+        "title": "Audio only task.",
+        "description": "oge-8-description.mp3",
+        "audio": true,
+        "images": [],
+        "questions": [
+          "oge-8-questions.mp3"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 29,
+        "recordTime": 319
+      },
+      {
+        "id": 3,
+        "title": "You are going to give a talk about seasons and weather. You will have to start in 1.5 minutes and speak for not more than 2 minutes (10–12 sentences).",
+        "description": "Remember to say:",
+        "audio": null,
+        "images": [],
+        "questions": [
+          "what your typical school day is like",
+          "what your favourite subject is, and why",
+          "what you like most about your school",
+          "what your attitude to your school life is"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "oge",
+    "enabled":true
+  },
+  {
+    "id": 18,
+    "num": 9,
+    "tasks": [
+      {
+        "id": 1,
+        "title": "You are going to read the text aloud. You have 1.5 minutes to read the text silently, and then be ready to read it aloud. Remember that you will not have more than 2 minutes for reading aloud.",
+        "description": "The human brain is the most complex and remarkable organ of the body. It controls everything we do – thinking, learning, and even heart rate. Though the brain makes up only 2 percent of the body's weight, it uses around 20 percent of its energy. It works 24 hours a day. Even when a person is sleeping, the brain is working hard to keep other organs functioning. Most people think that our brain is more active during the daytime because it needs to deal with a great amount of information. In fact, that’s not true. The brain is far more active when a person is sleeping! However, scientists don’t yet have any explanation for this fact.",
+        "audio": null,
+        "images": [],
+        "questions": [],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 89,
+        "recordTime": 119
+      },
+      {
+        "id": 2,
+        "title": "Audio only task.",
+        "description": "oge-9-description.mp3",
+        "audio": true,
+        "images": [],
+        "questions": [
+          "oge-9-questions.mp3"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": false,
+        "note": "",
+        "prepareTime": 29,
+        "recordTime": 319
+      },
+      {
+        "id": 3,
+        "title": "You are going to give a talk about seasons and weather. You will have to start in 1.5 minutes and speak for not more than 2 minutes (10–12 sentences).",
+        "description": "Remember to say:",
+        "audio": null,
+        "images": [],
+        "questions": [
+          "what people need friends fo",
+          "how long you and your friend have known each other",
+          "what you enjoy doing together",
+          "what your attitude to friendship is"
+        ],
+        "sequentialQuestions": false,
+        "questionsInterval": 0,
+        "selectableImages": true,
+        "note": "You have to talk continuously.",
+        "prepareTime": 89,
+        "recordTime": 119
+      }
+    ],
+    "waitTime": 4,
+    "type": "oge",
+    "enabled":true
   }
 ]
