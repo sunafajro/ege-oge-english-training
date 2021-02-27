@@ -5,7 +5,7 @@
         class="btn btn-info ml-1 mb-1"
         :key="test.num"
         :to="'/exam/' + test.num"
-        v-for="test in selectedTests"
+        v-for="test in tests"
       >
         Вариант {{ test.num }}
       </router-link>
@@ -18,10 +18,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["examType", "tests"]),
-    selectedTests() {
-      return this.tests.filter(test => test.type === this.examType);
-    }
+    ...mapState(["tests"])
   }
 };
 </script>
