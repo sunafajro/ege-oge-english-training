@@ -49,15 +49,18 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { recordAudio } from "../utils";
 
 export default {
   computed: {
-    ...mapState(["stream"]),
+    ...mapState(["examType", "stream"]),
     recordButtonClass() {
       return "btn btn-sm " + (!this.recording ? "btn-primary" : "btn-danger");
     }
+  },
+  async created() {
+    await this.getTests(this.examType);
   },
   data() {
     return {
@@ -67,6 +70,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["getTests"]),
     async getRecord() {
       if (this.stream) {
         if (this.recording) {

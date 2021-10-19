@@ -6,9 +6,13 @@ import Noty from "noty";
 
 Vue.use(Vuex);
 
+const el = document.getElementById("app");
+const urls = JSON.parse(el.dataset.urls);
+
 export default new Vuex.Store({
   state: {
     audioUrls: [],
+    examFilesUrl: urls.files ? urls.files : "",
     examType: null,
     loggedIn: false,
     micAccess: null,
@@ -37,7 +41,7 @@ export default new Vuex.Store({
   },
   mutations: {
     updateTests(state, data) {
-      state.tests = data.filter(item => item.enabled);
+      state.tests = data;
     },
     updateAudioUrls(state, data) {
       state.audioUrls = data;
@@ -59,9 +63,13 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getTests({ commit, dispatch }) {
+    async getTests({ commit, dispatch, state }, payload) {
       try {
-        const { data: tests } = await axios.get("/js/data.json");
+        let examsUrl = urls.exams;
+        if (payload) {
+          examsUrl = `${examsUrl}?type=${state.examType}`;
+        }
+        const { data: tests } = await axios.get(examsUrl);
         commit("updateTests", tests);
       } catch (e) {
         dispatch("showNotification", {

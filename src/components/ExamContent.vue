@@ -14,7 +14,7 @@
         <img
           class="task-image img-thumbnail"
           style="height: 210px"
-          :src="'./images/' + examType + '/' + exam + '/' + image"
+          :src="examFilesUrl + '/' + image"
           @click="selectImage(image)"
         />
       </div>
@@ -60,23 +60,27 @@ import { timeFormat } from "../utils";
 
 export default {
   created() {
-    if (this.task.audio && this.task.id === 2) {
+    //  && this.task.id === 2
+    if (this.task.audio) {
       if (this.currentAudio) {
         this.currentAudio.pause();
       }
-      this.currentAudio = new Audio("./audio/" + this.task.description);
+      this.currentAudio = new Audio(
+        `${this.examFilesUrl}/${this.task.description}`
+      );
       this.currentAudio.play();
     }
   },
   destroyed() {
-    if (this.task.audio && this.task.id === 2) {
+    //  && this.task.id === 2
+    if (this.task.audio) {
       if (this.currentAudio) {
         this.currentAudio.pause();
       }
     }
   },
   computed: {
-    ...mapState(["examType"]),
+    ...mapState(["examFilesUrl", "examType"]),
     filteredImages() {
       return this.task.selectableImages && this.selectedImage
         ? this.task.images.filter(image => image === this.selectedImage)
@@ -181,7 +185,9 @@ export default {
         if (this.currentAudio) {
           this.currentAudio.pause();
         }
-        this.currentAudio = new Audio("./audio/" + this.task.questions[0]);
+        this.currentAudio = new Audio(
+          `${this.examFilesUrl}/${this.task.questions[0]}`
+        );
         this.currentAudio.play();
       }
     }
