@@ -60,7 +60,8 @@ import { timeFormat } from "../utils";
 
 export default {
   created() {
-    if (this.task.audio && this.task.id === 2) {
+    //  && this.task.id === 2
+    if (this.task.audio) {
       if (this.currentAudio) {
         this.currentAudio.pause();
       }
@@ -71,7 +72,8 @@ export default {
     }
   },
   destroyed() {
-    if (this.task.audio && this.task.id === 2) {
+    //  && this.task.id === 2
+    if (this.task.audio) {
       if (this.currentAudio) {
         this.currentAudio.pause();
       }
