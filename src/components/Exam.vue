@@ -7,11 +7,8 @@
             {{ timerInfo }}
           </div>
           <div class="col-4 text-center">
-            <span v-if="currTaskNum !== 2">
-              {{ time | timeFormat }}
-            </span>
-            <span v-if="currTaskNum === 2 && currSubTaskNum !== 2">
-              {{ time | timeFormat }}
+            <span>
+              {{ formattedTime }}
             </span>
           </div>
           <div class="col-4 text-right">
@@ -48,29 +45,37 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import ExamContent from "./ExamContent.vue";
-import { recordAudio, timeFormat } from "../utils";
+import { mapActions, mapState } from 'vuex';
+import ExamContent from './ExamContent.vue';
+import { recordAudio, timeFormat } from '../utils';
 
 export default {
   components: {
-    "e-content-component": ExamContent
+    'e-content-component': ExamContent,
   },
   computed: {
-    ...mapState(["audioUrls", "tests", "examType", "stream", "userCode"]),
+    ...mapState(['audioUrls', 'tests', 'examType', 'stream', 'userCode']),
     alertClass() {
       return this.currSubTaskNum === 0
-        ? "info"
+        ? 'info'
         : this.currSubTaskNum === 1
-        ? "warning"
-        : "success";
+        ? 'warning'
+        : 'success';
     },
     timerInfo() {
-      return this.currSubTaskNum === 0
-        ? "Приготовьтесь!"
-        : this.currSubTaskNum === 1
-        ? "Время на подготовку"
-        : "Идет запись";
+      let text = 'Идет запись';
+      switch (this.currSubTaskNum) {
+        case 0:
+          text = 'Приготовьтесь!';
+          break;
+        case 1:
+          text = 'Время на подготовку';
+          if (this.currentTask.audio) {
+            text = '';
+          }
+          break;
+      }
+      return text;
     },
     iterations() {
       const count = this.selectedTest.tasks.length;
@@ -118,7 +123,27 @@ export default {
           String(test.num) === String(this.$route.params.id)
       );
       return Array.isArray(filtered) && filtered.length ? filtered[0] : {};
-    }
+    },
+    formattedTime() {
+      let time = timeFormat(this.time);
+      /*
+       * Убираем таймер для заданий номер 2 и 3, тип аудио, шаги "подготовка", "запись"
+       */
+      if ([2, 3].indexOf(this.currTaskNum) !== -1 && this.currentTask.audio) {
+        if (this.currSubTaskNum !== 0) {
+          time = '';
+        }
+      }
+      /*
+       * Убираем таймер для задания номер 2, тип без аудио, шаг "запись"
+       */
+      if (this.currTaskNum === 2 && this.currentTask.audio) {
+        if (this.currSubTaskNum === 2) {
+          time = '';
+        }
+      }
+      return time;
+    },
   },
   async created() {
     this.start(this.selectedTest.waitTime);
@@ -129,16 +154,11 @@ export default {
       running: false,
       time: 0,
       timer: null,
-      step: 0
+      step: 0,
     };
   },
-  filters: {
-    timeFormat(seconds) {
-      return timeFormat(seconds);
-    }
-  },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(['logout']),
     start(s) {
       if (s) {
         this.time = s;
@@ -169,14 +189,14 @@ export default {
               id,
               filename:
                 this.examType +
-                ". Задание " +
+                '. Задание ' +
                 id +
-                ". " +
+                '. ' +
                 this.userCode +
-                ".wav",
-              url: audioUrl
+                '.wav',
+              url: audioUrl,
             });
-            this.$store.commit("updateAudioUrls", audios);
+            this.$store.commit('updateAudioUrls', audios);
             this.recorder = null;
           });
         }
@@ -194,9 +214,9 @@ export default {
       }
     },
     goToExamsList() {
-      this.$store.commit("updateAudioUrls", []);
+      this.$store.commit('updateAudioUrls', []);
       this.logout();
-    }
-  }
+    },
+  },
 };
 </script>

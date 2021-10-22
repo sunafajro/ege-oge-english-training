@@ -34,7 +34,7 @@
         class="btn btn-sm btn-success"
         style="margin-right: 0.5rem; width: 50px"
       >
-        {{ time | timeFormat }}
+        {{ formattedTime }}
       </div>
       <button class="btn btn-sm btn-success" @click="stop">
         следующий ответ
@@ -108,6 +108,9 @@ export default {
         }
       }
       return num;
+    },
+    formattedTime() {
+      return timeFormat(this.time);
     }
   },
   data() {
@@ -119,11 +122,6 @@ export default {
       time: 0,
       timer: null
     };
-  },
-  filters: {
-    timeFormat(seconds) {
-      return timeFormat(seconds);
-    }
   },
   methods: {
     selectImage(name) {
