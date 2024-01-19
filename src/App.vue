@@ -1,93 +1,29 @@
-<template>
-  <div id="app">
-    <div class="alert alert-danger" v-if="!micAccess">
-      Нет доступа к микрофону на вашем устройстве!
-    </div>
-    <div id="app" class="container-fluid">
-      <div class="row header-title">
-        <div class="col-12 text-center">
-          <h3>Пробные тесты {{ headerName }} по английскому языку</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-10 offset-1">
-          <router-view />
-        </div>
-      </div>
-    </div>
-    <div class="bottom-panel" v-if="loggedIn">
-      <div class="alert alert-info">
-        <div class="row">
-          <div class="col-6 text-left">
-            <a
-              class="btn btn-sm btn-info"
-              style="margin-right: 0.5rem"
-              :href="a.url"
-              :download="a.filename"
-              :key="'recording-' + a.id"
-              v-for="a in audioUrls"
-            >
-              Запись {{ a.id }}
-            </a>
-          </div>
-          <div class="col-6 text-right">
-            {{ " " }}
-            <b>{{ userCode }}</b>
-            {{ " " }}
-            <span class="logout-link" @click="goToExamsList">(Выйти)</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+<script setup>
+import { computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '@/store/auth';
 
-<script>
-import { mapActions, mapState } from "vuex";
+const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
+const { isGuest } = storeToRefs(authStore);
 
-export default {
-  computed: {
-    ...mapState(["audioUrls", "examType", "loggedIn", "micAccess", "userCode"]),
-    headerName() {
-      if (this.examType === "oge") {
-        return "ОГЭ";
-      } else if (this.examType === "ege") {
-        return "ЕГЭ";
-      } else {
-        return "ОГЭ/ЕГЭ";
-      }
-    }
-  },
-  async created() {
-    if (!this.micAccess) {
-      this.checkMicrofone();
-    }
-  },
-  methods: {
-    ...mapActions(["checkMicrofone", "logout", "showNotification"]),
-    goToExamsList() {
-      this.$store.commit("updateAudioUrls", []);
-      this.logout();
-    }
+const layout = computed(() => `layout-${route.meta.layout}`);
+
+watch(isGuest, (value) => {
+  if (value) {
+    router.push('/login');
   }
-};
+});
 </script>
 
-<style>
-.bottom-panel {
-  position: fixed;
-  bottom: 0;
-  margin: 0;
-  width: 100%;
-}
-.bottom-panel > .alert {
-  margin: 0;
-}
-.header-title {
-  margin: 1rem 0;
-}
-.logout-link:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-</style>
+<template>
+  <component :is="layout">
+    <div class="row">
+      <div class="col-10 offset-1">
+        <router-view />
+      </div>
+    </div>
+  </component>
+</template>

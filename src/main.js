@@ -1,34 +1,16 @@
-import Vue from "vue";
-import { mapState } from "vuex";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
-import "../node_modules/noty/lib/noty.css";
-import "../node_modules/noty/lib/themes/bootstrap-v4.css";
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import router from '@/router';
+import App from '@/App.vue';
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import LoginLayout from '@/layouts/LoginLayout.vue';
+import '@/assets/scss/app.scss';
 
-Vue.config.productionTip = false;
+const pinia = createPinia();
 
-new Vue({
-  computed: {
-    ...mapState(["loggedIn"])
-  },
-  created() {
-    if (!this.loggedIn && this.$route.path !== "/login") {
-      this.$router.push("/login");
-    }
-  },
-  router,
-  store,
-  render: h => h(App),
-  watch: {
-    loggedIn(value) {
-      if (!value && this.$route.path !== "/login") {
-        this.$router.push("/login");
-      }
-      if (value && this.$route.path === "/login") {
-        this.$router.push("/instructions");
-      }
-    }
-  }
-}).$mount("#app");
+const app = createApp(App);
+app.component('LayoutDefault', DefaultLayout);
+app.component('LayoutLogin', LoginLayout);
+app.use(router);
+app.use(pinia);
+app.mount('#app');
