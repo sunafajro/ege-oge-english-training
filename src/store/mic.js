@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useNotifyStore } from '@/store/notify';
 
 export const useMicStore = defineStore('mic', {
   state: () => ({
@@ -16,6 +17,11 @@ export const useMicStore = defineStore('mic', {
       } catch (e) {
         this.allowed = false;
         this.stream = null;
+        const notifyStore = useNotifyStore();
+        notifyStore.pushItem({
+          message: 'Не удалось получить доступ к микрофону',
+          type: 'danger',
+        });
       }
     },
   },

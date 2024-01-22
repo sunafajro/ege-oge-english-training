@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useNotifyStore } from '@/store/notify';
 
 const el = document.getElementById('app');
 const urls = JSON.parse(el.dataset.urls);
@@ -10,6 +11,7 @@ export const useExamStore = defineStore('exam', {
     items: [],
     fileUrl: urls.files ?? '',
     itemsUrl: urls.exams ?? '',
+    error: null,
   }),
   actions: {
     async getItems({ examType }) {
@@ -19,6 +21,11 @@ export const useExamStore = defineStore('exam', {
         this.items = tests;
       } catch (e) {
         this.items = [];
+        const notifyStore = useNotifyStore();
+        notifyStore.pushItem({
+          message: 'Не удалось получить варианты тестов',
+          type: 'danger',
+        });
       }
     },
     clear() {

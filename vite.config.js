@@ -14,7 +14,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/site': 'https://exams.language-school.ru',
+      '/site': {
+        target: 'http://exams.local:8010',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/site/, ''),
+      }
     }
   }
 });

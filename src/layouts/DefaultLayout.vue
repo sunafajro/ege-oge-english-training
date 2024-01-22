@@ -2,6 +2,7 @@
 import TitleComponent from '@/components/TitleComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
 import MicAlertComponent from '@/components/MicAlertComponent.vue';
+import ToastComponent from '@/components/ToastComponent.vue';
 </script>
 
 <template>
@@ -11,4 +12,5 @@ import MicAlertComponent from '@/components/MicAlertComponent.vue';
     <slot />
   </div>
   <FooterComponent />
+  <ToastComponent />
 </template>
