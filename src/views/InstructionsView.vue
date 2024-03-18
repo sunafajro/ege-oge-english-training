@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/store/auth';
 import { useMicStore } from '@/store/mic';
 import { useExamStore } from '@/store/exam';
+import { recordAudio } from '@/utils';
 
 const authStore = useAuthStore();
 const micStore = useMicStore();
