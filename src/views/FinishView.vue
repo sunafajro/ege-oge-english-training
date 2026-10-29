@@ -1,13 +1,21 @@
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/store/auth';
 import { useExamStore } from '@/store/exam';
 
 const authStore = useAuthStore();
 const { logout } = authStore;
 const examStore = useExamStore();
+const { records } = storeToRefs(examStore);
 const { clear } = examStore;
 
 function userLogout() {
+  if (
+    records.value.length &&
+    !window.confirm('Выйти и удалить несохранённые записи ответов?')
+  ) {
+    return;
+  }
   clear();
   logout();
 }

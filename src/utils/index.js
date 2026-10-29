@@ -1,24 +1,56 @@
+const audioTypes = [
+  { mimeType: 'audio/webm;codecs=opus', extension: 'webm' },
+  { mimeType: 'audio/webm', extension: 'webm' },
+  { mimeType: 'audio/ogg;codecs=opus', extension: 'ogg' },
+  { mimeType: 'audio/mp4', extension: 'm4a' },
+];
+
 export const recordAudio = (stream) => {
   return new Promise((resolve) => {
-    const mediaRecorder = new MediaRecorder(stream);
+    const audioType = audioTypes.find(({ mimeType }) =>
+      MediaRecorder.isTypeSupported(mimeType)
+    );
+    const mediaRecorder = audioType
+      ? new MediaRecorder(stream, { mimeType: audioType.mimeType })
+      : new MediaRecorder(stream);
+    const extension = audioType?.extension ?? 'webm';
     const audioChunks = [];
     mediaRecorder.addEventListener('dataavailable', (event) => {
-      audioChunks.push(event.data);
+      if (event.data.size) {
+        audioChunks.push(event.data);
+      }
     });
     const start = () => {
       mediaRecorder.start();
     };
     const stop = () => {
       return new Promise((resolve) => {
-        mediaRecorder.addEventListener('stop', () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-          const audioUrl = URL.createObjectURL(audioBlob);
-          resolve({ audioUrl });
-        });
-        mediaRecorder.stop();
+        if (mediaRecorder.state === 'inactive') {
+          resolve(null);
+          return;
+        }
+        mediaRecorder.addEventListener(
+          'stop',
+          () => {
+            const type =
+              mediaRecorder.mimeType || audioType?.mimeType || 'audio/webm';
+            const audioBlob = new Blob(audioChunks, { type });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            resolve({ audioUrl, extension });
+          },
+          { once: true }
+        );
+        if (mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop();
+        }
       });
     };
-    resolve({ start, stop });
+    const cancel = () => {
+      if (mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      }
+    };
+    resolve({ start, stop, cancel });
   });
 };
 

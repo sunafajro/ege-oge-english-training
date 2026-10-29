@@ -97,24 +97,22 @@ function stop() {
   }
 }
 
+function playAudio(file) {
+  currentAudio.value?.pause();
+  currentAudio.value = new Audio(`${fileUrl.value}/${file}`);
+  currentAudio.value.play().catch(() => {});
+}
+
 onMounted(() => {
   const { audio, description } = task.value;
   if (audio) {
-    if (currentAudio.value) {
-      currentAudio.value.pause();
-    }
-    currentAudio.value = new Audio(`${fileUrl.value}/${description}`);
-    currentAudio.value.play();
+    playAudio(description);
   }
 });
 
 onUnmounted(() => {
-  const { audio } = task.value;
-  if (audio) {
-    if (currentAudio.value) {
-      currentAudio.value.pause();
-    }
-  }
+  clearInterval(timer.value);
+  currentAudio.value?.pause();
 });
 
 watch(currSubTaskNum, (value) => {
@@ -124,11 +122,7 @@ watch(currSubTaskNum, (value) => {
     selectedQuestion.value = 0;
     start(questionsInterval);
   } else if (!sequentialQuestions && value === 2 && audio) {
-    if (currentAudio.value) {
-      currentAudio.value.pause();
-    }
-    currentAudio.value = new Audio(`${fileUrl.value}/${questions[0]}`);
-    currentAudio.value.play();
+    playAudio(questions[0]);
   }
 });
 </script>
