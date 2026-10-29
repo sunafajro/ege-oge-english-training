@@ -11,8 +11,8 @@
 ## Технологии и команды
 
 - Vue 3, Composition API и `<script setup>`.
-- Vite 5, JavaScript ES modules.
-- Vue Router 4 с HTML5 history.
+- Vite 8, JavaScript ES modules.
+- Vue Router 5 с HTML5 history.
 - Pinia; хранилища описаны через Options API.
 - Axios для получения вариантов экзамена.
 - Bootstrap 5 и SCSS.
