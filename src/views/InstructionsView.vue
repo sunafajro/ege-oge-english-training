@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/store/auth';
 import { useMicStore } from '@/store/mic';
@@ -21,6 +21,11 @@ const examTypeNum = computed(() => (examType.value === 'oge' ? '9' : '11'));
 
 onMounted(() => {
   getItems({ examType: examType.value });
+});
+
+onUnmounted(() => {
+  recorder.value?.cancel();
+  audio.value?.pause();
 });
 
 async function createRecord() {

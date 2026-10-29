@@ -15,7 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/site': {
-        target: 'http://exams.local:8010',
+        target: 'http://exams.localhost:18080/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/site/, ''),
       },

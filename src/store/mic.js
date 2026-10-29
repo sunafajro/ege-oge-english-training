@@ -12,6 +12,7 @@ export const useMicStore = defineStore('mic', {
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
+        this.release();
         this.allowed = true;
         this.stream = stream;
       } catch (e) {
@@ -23,6 +24,11 @@ export const useMicStore = defineStore('mic', {
           type: 'danger',
         });
       }
+    },
+    release() {
+      this.stream?.getTracks().forEach((track) => track.stop());
+      this.stream = null;
+      this.allowed = false;
     },
   },
 });

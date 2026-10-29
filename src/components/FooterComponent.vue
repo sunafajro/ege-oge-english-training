@@ -11,6 +11,12 @@ const { records } = storeToRefs(examStore);
 const { clear } = examStore;
 
 function userLogout() {
+  if (
+    records.value.length &&
+    !window.confirm('Выйти и удалить несохранённые записи ответов?')
+  ) {
+    return;
+  }
   clear();
   logout();
 }
