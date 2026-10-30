@@ -30,10 +30,11 @@ function userLogout() {
           class="btn btn-sm btn-info me-2"
           :href="a.url"
           :download="a.filename"
-          :key="`recording-${a.id}`"
+          :key="a.filename"
           v-for="a in records"
         >
-          Запись {{ a.id }}
+          Запись {{ a.id
+          }}<template v-if="a.questionId">.{{ a.questionId }}</template>
         </a>
       </div>
       <div>

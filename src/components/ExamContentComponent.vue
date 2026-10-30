@@ -4,6 +4,8 @@ import { storeToRefs } from 'pinia';
 import { useExamStore } from '@/store/exam';
 import { timeFormat } from '@/utils';
 
+const emit = defineEmits(['description-ended']);
+
 const props = defineProps({
   currSubTaskNum: {
     required: true,
@@ -97,16 +99,20 @@ function stop() {
   }
 }
 
-function playAudio(file) {
+function playAudio(file, onEnded) {
   currentAudio.value?.pause();
   currentAudio.value = new Audio(`${fileUrl.value}/${file}`);
-  currentAudio.value.play().catch(() => {});
+  if (onEnded) {
+    currentAudio.value.addEventListener('ended', onEnded, { once: true });
+    currentAudio.value.addEventListener('error', onEnded, { once: true });
+  }
+  currentAudio.value.play().catch(onEnded ?? (() => {}));
 }
 
 onMounted(() => {
   const { audio, description } = task.value;
   if (audio) {
-    playAudio(description);
+    playAudio(description, () => emit('description-ended'));
   }
 });
 
@@ -121,7 +127,13 @@ watch(currSubTaskNum, (value) => {
   if (sequentialQuestions && value === 2) {
     selectedQuestion.value = 0;
     start(questionsInterval);
-  } else if (!sequentialQuestions && value === 2 && audio) {
+  } else if (
+    !sequentialQuestions &&
+    value === 2 &&
+    audio &&
+    questions.length === 1 &&
+    !task.value.completionAudio
+  ) {
     playAudio(questions[0]);
   }
 });

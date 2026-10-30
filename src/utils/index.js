@@ -54,6 +54,29 @@ export const recordAudio = (stream) => {
   });
 };
 
+export const playBeep = (frequency) => {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) {
+    return;
+  }
+  try {
+    const context = new AudioContext();
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    context.resume().catch(() => {});
+    oscillator.type = 'sine';
+    oscillator.frequency.value = frequency;
+    gain.gain.value = 0.15;
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + 0.15);
+    oscillator.addEventListener('ended', () => context.close(), { once: true });
+  } catch (e) {
+    return;
+  }
+};
+
 export const timeFormat = (seconds) => {
   const sec = seconds % 60;
   const min = seconds / 60 > 0 ? Math.floor(seconds / 60) : 0;

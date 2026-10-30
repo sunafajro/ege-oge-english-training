@@ -6,7 +6,7 @@ import { useAuthStore } from '@/store/auth';
 import { useMicStore } from '@/store/mic';
 import { useExamStore } from '@/store/exam';
 import { useNotifyStore } from '@/store/notify';
-import { recordAudio, timeFormat } from '@/utils';
+import { playBeep, recordAudio, timeFormat } from '@/utils';
 import ExamContentComponent from '@/components/ExamContentComponent.vue';
 
 const route = useRoute();
@@ -16,67 +16,21 @@ const { examType, userCode } = storeToRefs(authStore);
 const micStore = useMicStore();
 const { stream } = storeToRefs(micStore);
 const examStore = useExamStore();
-const { records, items, loading, loadedType, error } = storeToRefs(examStore);
+const { records, items, fileUrl, loading, loadedType, error } =
+  storeToRefs(examStore);
 const notifyStore = useNotifyStore();
 
 const recorder = ref(null);
+const questionAudio = ref(null);
+const questionPlaying = ref(false);
+const completionPlaying = ref(false);
+const descriptionEnded = ref(false);
+const questionIndex = ref(0);
 const running = ref(false);
 const transitioning = ref(false);
 const time = ref(0);
 const timer = ref(null);
 const step = ref(0);
-
-const alertClass = computed(() =>
-  currSubTaskNum.value === 0
-    ? 'info'
-    : currSubTaskNum.value === 1
-      ? 'warning'
-      : 'success'
-);
-
-const timerInfo = computed(() => {
-  let text = 'Идет запись';
-  switch (currSubTaskNum.value) {
-    case 0:
-      text = 'Приготовьтесь!';
-      break;
-    case 1:
-      text = 'Время на подготовку';
-      if (currentTask.value.audio) {
-        text = '';
-      }
-      break;
-  }
-  return text;
-});
-
-const currentInterval = computed(() => {
-  const { prepareTime, recordTime } = currentTask.value;
-  switch (currSubTaskNum.value) {
-    case 1:
-      return prepareTime;
-    case 2:
-      return recordTime;
-    default:
-      return 5;
-  }
-});
-
-const currentTask = computed(() => {
-  const tasks = selectedTest.value?.tasks;
-  return Array.isArray(tasks)
-    ? (tasks.find((task) => task.id === currTaskNum.value) ?? {})
-    : {};
-});
-
-const currTaskNum = computed(() => Math.ceil(step.value / 3));
-const currSubTaskNum = computed(() => step.value % 3);
-const isFinished = computed(() => {
-  const tasks = selectedTest.value?.tasks;
-  return (
-    Array.isArray(tasks) && tasks.length > 0 && step.value >= 3 * tasks.length
-  );
-});
 
 const selectedTest = computed(() => {
   return (
@@ -87,17 +41,92 @@ const selectedTest = computed(() => {
     ) ?? null
   );
 });
+const currTaskNum = computed(() => Math.ceil(step.value / 3));
+const currSubTaskNum = computed(() => step.value % 3);
+const currentTask = computed(() => {
+  const tasks = selectedTest.value?.tasks;
+  return Array.isArray(tasks)
+    ? (tasks.find((task) => task.id === currTaskNum.value) ?? {})
+    : {};
+});
+const hasSeparateQuestions = computed(() => {
+  const { audio, questions, completionAudio } = currentTask.value;
+  return (
+    audio &&
+    Array.isArray(questions) &&
+    (questions.length > 1 || Boolean(completionAudio))
+  );
+});
+const currentQuestion = computed(
+  () => currentTask.value.questions?.[questionIndex.value] ?? null
+);
+const isFinished = computed(() => {
+  const tasks = selectedTest.value?.tasks;
+  return (
+    Array.isArray(tasks) && tasks.length > 0 && step.value >= 3 * tasks.length
+  );
+});
 
+const alertClass = computed(() => {
+  if (
+    questionPlaying.value ||
+    completionPlaying.value ||
+    currSubTaskNum.value === 0
+  ) {
+    return 'info';
+  }
+  return currSubTaskNum.value === 1 ? 'warning' : 'success';
+});
+const timerInfo = computed(() => {
+  if (questionPlaying.value) {
+    return `Вопрос ${questionIndex.value + 1} из ${currentTask.value.questions.length}`;
+  }
+  if (completionPlaying.value) {
+    return 'Завершение задания';
+  }
+  if (currSubTaskNum.value === 0) {
+    return 'Приготовьтесь!';
+  }
+  if (currSubTaskNum.value === 1) {
+    return currentTask.value.audio ? '' : 'Время на подготовку';
+  }
+  return 'Идет запись';
+});
+const stopButtonText = computed(() => {
+  if (hasSeparateQuestions.value && currSubTaskNum.value === 2) {
+    return questionIndex.value < currentTask.value.questions.length - 1
+      ? 'следующий ответ'
+      : 'завершить ответ';
+  }
+  return 'закончить досрочно';
+});
+const currentInterval = computed(() => {
+  const { prepareTime, recordTime, questionsInterval } = currentTask.value;
+  switch (currSubTaskNum.value) {
+    case 1:
+      return prepareTime;
+    case 2:
+      return hasSeparateQuestions.value
+        ? (questionsInterval ?? recordTime)
+        : recordTime;
+    default:
+      return 5;
+  }
+});
 const formattedTime = computed(() => {
+  if (questionPlaying.value || completionPlaying.value) {
+    return '';
+  }
   const { audio } = currentTask.value;
   let timeString = timeFormat(time.value);
-  if ([2, 3].includes(currTaskNum.value) && audio) {
+  if (
+    !hasSeparateQuestions.value &&
+    [2, 3].includes(currTaskNum.value) &&
+    audio
+  ) {
     if (currSubTaskNum.value !== 0) {
       timeString = '';
     }
-  }
-  if (currTaskNum.value === 2 && audio && currSubTaskNum.value === 2) {
-    timeString = '';
   }
   return timeString;
 });
@@ -112,50 +141,179 @@ function start(seconds) {
       if (time.value > 0) {
         time.value--;
       } else {
-        stop();
+        stop(true);
       }
     }, 1000);
   }
 }
 
-async function stop() {
-  if (transitioning.value || !running.value) {
-    return;
-  }
-  transitioning.value = true;
+function clearTimer() {
   clearInterval(timer.value);
   time.value = 0;
   running.value = false;
   timer.value = null;
-  step.value += 1;
+}
+
+async function startRecording() {
+  if (!questionPlaying.value) {
+    return;
+  }
+  questionPlaying.value = false;
+  questionAudio.value = null;
+  playBeep(880);
   try {
-    if (currSubTaskNum.value === 0) {
-      if (recorder.value) {
-        const record = await recorder.value.stop();
-        if (record) {
-          const { audioUrl, extension } = record;
-          const id = currTaskNum.value;
-          records.value = [
-            ...records.value,
-            {
-              id,
-              filename: `${examType.value}._Задание_${id}._${userCode.value}.${extension}`,
-              url: audioUrl,
-            },
-          ];
-        }
-        recorder.value = null;
-      }
-      if (!isFinished.value) {
-        start(selectedTest.value.waitTime);
-      }
+    if (stream.value) {
+      recorder.value = await recordAudio(stream.value);
+      recorder.value.start();
+    }
+  } catch (e) {
+    notifyStore.pushItem({
+      message: 'Не удалось начать аудиозапись',
+      type: 'danger',
+    });
+  }
+  start(currentInterval.value);
+}
+
+function handleQuestionError() {
+  if (!questionPlaying.value) {
+    return;
+  }
+  notifyStore.pushItem({
+    message: 'Не удалось воспроизвести вопрос',
+    type: 'danger',
+  });
+  startRecording();
+}
+
+function handleDescriptionEnded() {
+  descriptionEnded.value = true;
+  if (
+    hasSeparateQuestions.value &&
+    [1, 2].includes(currSubTaskNum.value) &&
+    !questionPlaying.value
+  ) {
+    if (currSubTaskNum.value === 1) {
+      step.value += 1;
+    }
+    playCurrentQuestion();
+  }
+}
+
+function playCurrentQuestion() {
+  questionPlaying.value = true;
+  const audio = new Audio(`${fileUrl.value}/${currentQuestion.value}`);
+  questionAudio.value = audio;
+  audio.addEventListener('ended', startRecording, { once: true });
+  audio.addEventListener('error', handleQuestionError, { once: true });
+  audio.play().catch(handleQuestionError);
+}
+
+async function saveRecord(questionId = null) {
+  if (!recorder.value) {
+    return;
+  }
+  const record = await recorder.value.stop();
+  recorder.value = null;
+  if (!record) {
+    return;
+  }
+  const { audioUrl, extension } = record;
+  const id = currTaskNum.value;
+  const question = questionId ? `._Вопрос_${questionId}` : '';
+  records.value = [
+    ...records.value,
+    {
+      id,
+      questionId,
+      filename: `${examType.value}._Задание_${id}${question}._${userCode.value}.${extension}`,
+      url: audioUrl,
+    },
+  ];
+}
+
+function finishSeparateTask() {
+  completionPlaying.value = false;
+  questionAudio.value = null;
+  questionIndex.value = 0;
+  step.value += 1;
+  if (!isFinished.value) {
+    start(selectedTest.value.waitTime);
+  }
+}
+
+function handleCompletionError() {
+  if (!completionPlaying.value) {
+    return;
+  }
+  notifyStore.pushItem({
+    message: 'Не удалось воспроизвести завершение задания',
+    type: 'danger',
+  });
+  finishSeparateTask();
+}
+
+function playCompletion() {
+  completionPlaying.value = true;
+  const audio = new Audio(
+    `${fileUrl.value}/${currentTask.value.completionAudio}`
+  );
+  questionAudio.value = audio;
+  audio.addEventListener('ended', finishSeparateTask, { once: true });
+  audio.addEventListener('error', handleCompletionError, { once: true });
+  audio.play().catch(handleCompletionError);
+}
+
+async function stopSeparateQuestion(automatic) {
+  if (automatic) {
+    playBeep(440);
+  }
+  await saveRecord(questionIndex.value + 1);
+  if (automatic) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  if (questionIndex.value < currentTask.value.questions.length - 1) {
+    questionIndex.value += 1;
+    playCurrentQuestion();
+  } else if (currentTask.value.completionAudio) {
+    playCompletion();
+  } else {
+    finishSeparateTask();
+  }
+}
+
+async function stop(automatic = false) {
+  if (transitioning.value || !running.value) {
+    return;
+  }
+  transitioning.value = true;
+  clearTimer();
+  try {
+    if (hasSeparateQuestions.value && currSubTaskNum.value === 2) {
+      await stopSeparateQuestion(automatic);
     } else {
-      if (currSubTaskNum.value === 2 && stream.value) {
-        recorder.value = await recordAudio(stream.value);
-        recorder.value.start();
-      }
-      if (currentInterval.value !== undefined) {
-        start(currentInterval.value);
+      step.value += 1;
+      if (currSubTaskNum.value === 0) {
+        await saveRecord();
+        if (!isFinished.value) {
+          start(selectedTest.value.waitTime);
+        }
+      } else {
+        if (hasSeparateQuestions.value) {
+          if (currSubTaskNum.value === 1) {
+            descriptionEnded.value = false;
+          } else if (descriptionEnded.value) {
+            playCurrentQuestion();
+          }
+        } else {
+          if (currSubTaskNum.value === 2 && stream.value) {
+            recorder.value = await recordAudio(stream.value);
+            recorder.value.start();
+          }
+          if (currentInterval.value !== undefined) {
+            start(currentInterval.value);
+          }
+        }
       }
     }
   } catch (e) {
@@ -185,6 +343,7 @@ onMounted(loadAndStart);
 
 onUnmounted(() => {
   clearInterval(timer.value);
+  questionAudio.value?.pause();
   recorder.value?.cancel();
 });
 
@@ -213,7 +372,10 @@ watch(isFinished, (value) => {
       </router-link>
     </div>
     <template v-else>
-      <div class="col-12" v-if="running">
+      <div
+        class="col-12"
+        v-if="running || questionPlaying || completionPlaying"
+      >
         <div :class="`alert alert-${alertClass}`">
           <div class="row align-items-center">
             <div class="col-4 d-flex justify-content-start">
@@ -224,12 +386,12 @@ watch(isFinished, (value) => {
             </div>
             <div class="col-4 d-flex justify-content-end">
               <button
-                @click="stop"
+                @click="stop()"
                 :class="`btn btn-sm btn-${alertClass}`"
                 :disabled="transitioning"
-                v-if="currSubTaskNum !== 0"
+                v-if="running && currSubTaskNum !== 0"
               >
-                закончить досрочно
+                {{ stopButtonText }}
               </button>
             </div>
           </div>
@@ -239,6 +401,7 @@ watch(isFinished, (value) => {
         <ExamContentComponent
           :currSubTaskNum="currSubTaskNum"
           :task="currentTask"
+          @description-ended="handleDescriptionEnded"
         />
       </div>
     </template>
